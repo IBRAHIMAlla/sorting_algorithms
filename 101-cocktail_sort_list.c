@@ -4,22 +4,23 @@
 /**
  * sw - swaps a node with the next node in the list
  * @list: double pointer to the beginning of the list
- * @nd: node to swap
+ * @node: node
+ *
  *
  * Return: void
  */
-void sw(listint_t **list, listint_t *nd)
+void sw(listint_t **list, listint_t *node)
 {
-	nd->next->prev = nd->prev;
+	node->next->prev = node->prev;
 	if (nd->prev)
-		nd->prev->next = nd->next;
+		node->prev->next = node->next;
 	else
-		*list = nd->next;
-	nd->prev = nd->next;
-	nd->next = nd->next->next;
-	nd->prev->next = nd;
-	if (nd->next)
-		nd->next->prev = nd;
+		*list = node->next;
+	node->prev = node->next;
+	node->next = node->next->next;
+	node->prev->next = node;
+	if (node->next)
+		node->next->prev = node;
 }
 
 /**
