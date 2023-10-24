@@ -1,70 +1,66 @@
 #include "sort.h"
 #include <stdio.h>
-
 /**
- * sw - swaps a node with the next node in the lit
- * @list: double pointer to the beginning of the list
- * @node: node
- *
- *
- * Return: void
+ *swp_n - swap a node for his previous one
+ *@nd: node
+ *@list: node list
+ *Return: return a pointer to a node which was enter it
  */
-void sw(listint_t **list, listint_t *node)
+listint_t *swp_n(listint_t *nd, listint_t **list)
 {
-	node->next->prev = node->prev;
-	if (nd->prev)
-		node->prev->next = node->next;
-	else
-		*list = node->next;
-	node->prev = node->next;
-	node->next = node->next->next;
-	node->prev->next = node;
-	if (node->next)
-		node->next->prev = node;
-}
+	listint_t *b = nd->prev, *cur = nd;
 
+	b->next = cur->next;
+	if (cur->next)
+		cur->next->prev = b;
+	cur->next = b;
+	cur->prev = b->prev;
+	b->prev = cur;
+	if (cur->prev)
+		cur->prev->next = cur;
+	else
+		*list = cur;
+	return (cur);
+}
 /**
- * cocktail_sort_list - sorts a doubly linked list of integers in ascending
- * order using the Cocktail shaker sort algorithm
- * @list: Double pointer to the head of the doubly linked list
- *
- * Return: void
+ *cocktail_sort_list - cocktail sort implementation
+ *working on a double linked lists
+ *@list: list
  */
 void cocktail_sort_list(listint_t **list)
 {
-	char swp = 1;
-	listint_t *mpt;
+	listint_t *nd;
+	int swap_d = 1;
 
-	if (list == NULL || *list == NULL)
+	if (list == '\0' || (*list) == '\0' || (*list)->next == '\0')
 		return;
-	mpt = *list;
-	while (swp != 0)
+	nd = *list;
+	while (swap_d == 1)
 	{
-		swp = 0;
-		while (mpt->next != NULL)
+		swap_d = 0;
+		while (nd->next)
 		{
-			if (mpt->next->n < mpt->n)
+			if (nd->n > nd->next->n)
 			{
-				sw(list, temp);
-				swp = 1;
+				nd = swp_n(nd->next, list);
+				swap_d = 1;
 				print_list(*list);
 			}
-			else
-				mpt = mpt->next;
+			nd = nd->next;
 		}
-		if (swp == 0)
+		if (swap_d == 0)
 			break;
-		swp = 0;
-		while (mpt->prev != NULL)
+		swap_d = 0;
+		while (nd->prev)
 		{
-			if (mpt->prev->n > mpt->n)
+			if (nd->n < nd->prev->n)
 			{
-				sw(list, mpt->prev);
-				swp = 1;
+				nd = swp_n(nd, list);
+				swap_d = 1;
 				print_list(*list);
 			}
 			else
-				mpt = mpt->prev;
+				nd = nd->prev;
 		}
 	}
 }
