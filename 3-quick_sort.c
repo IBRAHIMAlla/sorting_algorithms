@@ -1,79 +1,78 @@
 #include "sort.h"
-#include <stdio.h>
-
 /**
- * partition - Determines the partition for the quicksort using the Lomuto scheme
- * @array: array to sort
- * @li: lowest index of the partition to sort
- * @hs: highest index of the partition to sort
- * @size: size of the array
- *
- * Return: index of the partition
- */
-size_t partition(int *array, ssize_t li, ssize_t hs, size_t size)
+*sw - the positions of two elements into an array
+*@array: array
+*@item2: array element
+*@item3: array element
+*/
+void sw(int *array, ssize_t item2, ssize_t item3)
 {
-	ssize_t m, y;
-	int s, pv;
+	int mpt;
 
-	pv = array[hs];
-	m = li - 1;
-	for (y = li; j < hs; y++)
+	mpt = array[item2];
+	array[item2] = array[item3];
+	array[item3] = mpt;
+}
+/**
+ *partition - partition sorting scheme implementation
+ *@array: array
+ *@ft: first array element
+ *@lt: last array element
+ *@size: size array
+ *Return: return the position of the last element sorted
+ */
+int partition(int *array, ssize_t ft, ssize_t lt, size_t size)
+{
+	int pv = array[lt];
+	ssize_t cur = ft, fd;
+
+	for (fd = ft; fd < lt; fd++)
 	{
-		if (array[y] < pv)
+		if (array[fd] < pv)
 		{
-			m++;
-			if (m != y)
+			if (array[cur] != array[fd])
 			{
-				s = array[m];
-				array[m] = array[m];
-				array[y] = s;
+				sw(array, cur, fd);
 				print_array(array, size);
 			}
+			cur++;
 		}
 	}
-	if (array[hs] < array[m + 1])
+	if (array[cur] != array[lt])
 	{
-		s = array[m + 1];
-		array[m + 1] = array[hs];
-		array[hs] = s;
+		sw(array, cur, lt);
 		print_array(array, size);
 	}
-	return (m + 1);
+	return (cur);
 }
-
 /**
- * qst - sorts a partition of an array of integers
- * @array: array to sort
- * @li: lowest index of the partition to sort
- * @hs: highest index of the partition to sort
- * @size: size of the array
- *
- * Return: void
+ *qst - qucksort algorithm implementation
+ *@array: array
+ *@ft: first array element
+ *@lt: last array element
+ *@size: array size
  */
-void qst(int *array, ssize_t li, ssize_t hs, size_t size)
+void qst(int *array, ssize_t ft, ssize_t lt, int size)
 {
-	ssize_t pv;
+	ssize_t ps = 0;
 
-	if (li < hs)
+
+	if (ft < lt)
 	{
-		pv = partition(array, li, hs, size);
-		qst(array, li, pv - 1, size);
-		qst(array, pv + 1, hs, size);
+		ps = partition(array, ft, lt, size);
 
+		qst(array, ft, ps - 1, size);
+		qst(array, ps + 1, lt, size);
 	}
 }
-
 /**
- * quick_sort - sorts an array of integers in ascending order using the
- * Quick sort algorithm
- * @array: The array to sort
- * @size: The size of the array
- *
- * Return: void
+ *quick_sort - prepare the terrain to quicksort
+ *@array: array
+ *@size: array size
  */
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
+	if (!array || size < 2)
 		return;
 	qst(array, 0, size - 1, size);
 }
