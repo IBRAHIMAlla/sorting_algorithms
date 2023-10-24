@@ -40,7 +40,7 @@ void counting_sort(int *array, size_t size)
 	for (m = 0; m <= mx; m++)
 	{
 		mpt = digit[m];
-		count[m] = tl;
+		digit[m] = tl;
 		tl += mpt;
 	}
 	for (y = 0; y < size; y++)
