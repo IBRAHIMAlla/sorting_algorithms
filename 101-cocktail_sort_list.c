@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 /**
- * sw - swaps a node with the next node in the list
+ * sw - swaps a node with the next node in the lit
  * @list: double pointer to the beginning of the list
  * @node: node
  *
