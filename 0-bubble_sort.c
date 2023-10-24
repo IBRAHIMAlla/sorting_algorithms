@@ -1,25 +1,32 @@
 #include "sort.h"
+
 /**
- * bubble_sort - sort array lements from min to max value
- * @array: array
- * @size: array size
- */
+ * bubble_sort - sorts an array of integers in ascending order,
+ * using the Bubble sort algorithm
+ * @array: the array
+ * @size: size of the array
+**/
+
 void bubble_sort(int *array, size_t size)
 {
+	unsigned int m, n = size;
+	int mpt;
+	int w;
 
-	size_t m, nd, pmt = 0;
+	do {
+		w = 0;
 
-	if (size < 2)
-		return;
-	for (m = 0; m < size; m++)
-		for (nd = 0; nd < size; nd++)
+		for (m = 1; m < n; m++)
 		{
-			if (array[nd] > array[nd + 1] && array[nd + 1])
+			if (array[m - 1] > array[m])
 			{
-			pmt = array[nd];
-			array[nd] = array[nd + 1];
-			array[nd + 1] = pmt;
-			print_array(array, size);
+				mpt = array[m - 1];
+				array[m - 1] = array[m];
+				array[m] = mpt;
+				w = m;
+				print_array(array, size);
 			}
 		}
+		n = w;
+	} while (n >= 1);
 }
